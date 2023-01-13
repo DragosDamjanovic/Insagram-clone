@@ -1,4 +1,4 @@
-import { Avatar } from "@mui/material";
+import { Avatar, Image } from "antd";
 
 const Notifications = () => {
   return (
@@ -17,9 +17,14 @@ const Notifications = () => {
         <div className="row">
           <a href="#" className="d-flex align-items-centertext-decoration-none">
             <Avatar
-              alt="Remy Sharp"
-              src="../public/instagram.svg"
-              sx={{ width: 24, height: 24 }}
+              src={
+                <Image
+                  src="../public/instagram"
+                  style={{
+                    width: 32,
+                  }}
+                />
+              }
             />
             <span className="d-none d-sm-inline mx-1">
               <strong>Skrba</strong> started following yo.

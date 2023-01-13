@@ -1,43 +1,96 @@
-import React from "react";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Avatar, Button } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import SendIcon from "@mui/icons-material/Send";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
+import React, { useEffect, useState } from "react";
+import {
+  MoreOutlined,
+  HeartOutlined,
+  MessageOutlined,
+  SendOutlined,
+  BookOutlined,
+  SmileOutlined,
+} from "@ant-design/icons";
+import { Avatar, Image, Input, Button } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { getPost } from "../../../Redux/Actions/PostAction";
+import UserPost from "./UserPost";
+import { Modal } from "react-bootstrap";
 
-const Post = () => {
+const Post = ({ postId }) => {
+  const post = useSelector((state) =>
+    state.Post.posts.find((object) => object._id === postId)
+  );
+  const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getPost(postId));
+  }, [postId, dispatch]);
+
+  const handleClose = (e) => {
+    e.preventDefault();
+    setShow(false);
+  };
+  const handleShow = (e) => {
+    e.preventDefault();
+    setShow(true);
+  };
+
   return (
     <>
-      <article>
+      <article className="mb-5">
         <div className="col">
-          <div className="row p-2">
-            <div className="d-flex flex-row justify-content-between align-items-center">
-              <header className="col-10 d-flex flex-row justify-content-between">
+          <div className="row">
+            <div className="d-flex flex-row justify-content-between align-items-center p-2">
+              <header className="col-10 d-flex flex-row">
                 <div>
-                  <Avatar alt="Remy Sharp" src="../public/instagram.svg" />
+                  <Avatar
+                    src={
+                      <Image
+                        src="../public/instagram.svg"
+                        style={{
+                          width: 32,
+                        }}
+                      />
+                    }
+                    style={{
+                      width: 37,
+                      height: 37,
+                    }}
+                  />
                 </div>
-                <div className="d-flex flex-column align-items-start">
-                  <span>User</span>
+                <div className="col mx-2">
+                  <div className="row text-start">
+                    <span style={{ fontSize: "14px" }}>User</span>
+                  </div>
+                  <div className="row text-start">
+                    <span style={{ fontSize: "14px" }}>Banjaluka</span>
+                  </div>
                 </div>
               </header>
               <div className="col-2">
-                <Button>
-                  <MoreVertIcon />{" "}
+                <Button type="link">
+                  <MoreOutlined style={{ fontSize: "25px" }} />
                 </Button>
               </div>
             </div>
           </div>
           <div className="row">
-            <div className="container">
+            <div
+              className="container p-0"
+              style={{
+                height: "500px",
+              }}
+            >
               <picture>
-                <source
-                  media="(min-width:650px)"
-                  srcSet="../../../public/ker.jpg"
+                <source media="(min-width:650px)" srcSet={post.image} />
+                <img
+                  src={post.image}
+                  alt="Flowers"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    top: "0",
+                    left: "0",
+                  }}
                 />
-                <img src="../../../public/ker.jpg" alt="Flowers" />
               </picture>
             </div>
           </div>
@@ -46,24 +99,24 @@ const Post = () => {
               <div>
                 <span>
                   <button>
-                    <FavoriteBorderIcon />
+                    <HeartOutlined style={{ fontSize: "25px" }} />
                   </button>
                 </span>
                 <span>
                   <button>
-                    <ChatBubbleOutlineIcon />
+                    <MessageOutlined style={{ fontSize: "25px" }} />
                   </button>
                 </span>
                 <span>
                   <button>
-                    <SendIcon />
+                    <SendOutlined style={{ fontSize: "25px" }} />
                   </button>
                 </span>
               </div>
               <div>
                 <span>
                   <button>
-                    <BookmarkBorderIcon />
+                    <BookOutlined style={{ fontSize: "25px" }} />
                   </button>
                 </span>
               </div>
@@ -85,11 +138,9 @@ const Post = () => {
                   </span>
                 </div>
                 <div className="row follwers-comments text-start">
-                  <a href="/">
-                    <div>
-                      Prikazi sve komentare (<span>53</span>)
-                    </div>
-                  </a>
+                  <Button type="link" onClick={handleShow}>
+                    Prikazi sve komentare (<span>53</span>)
+                  </Button>
                 </div>
               </div>
             </div>
@@ -101,15 +152,25 @@ const Post = () => {
             <section>
               <form className="row post-comands d-flex text-start flex-row">
                 <div className="col-1">
-                  <SentimentSatisfiedAltIcon />
+                  <SmileOutlined style={{ fontSize: "25px" }} />
                 </div>
-                <textarea className="col-9"></textarea>
-                <button className="col-2">Submit</button>
+                <Input className="col-9" placeholder="Add comment..." />
+                <button className="col-2">Post</button>
               </form>
             </section>
           </div>
         </div>
       </article>
+      <Modal show={show} onHide={handleClose} size="xl">
+        <UserPost
+          handleClose={handleClose}
+          postId={postId}
+          image={post.image}
+          comments={post.comments}
+          post={post}
+        />
+        {console.log(post)}
+      </Modal>
     </>
   );
 };

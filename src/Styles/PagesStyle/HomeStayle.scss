@@ -1,0 +1,21 @@
+.content {
+  background-color: #fafafa;
+  margin-left: 300px;
+
+  .stories-container {
+    background-color: #fff;
+    border: 1px solid rgb(219, 219, 219);
+    border-radius: 8px;
+  }
+
+  .posts-wraper {
+    article {
+      background-color: #fff;
+      border: 1px solid rgb(219, 219, 219);
+      border-radius: 8px;
+      padding: 12px;
+      margin-left: 108px;
+      margin-right: 108px;
+    }
+  }
+}

@@ -88,25 +88,23 @@ export const getPosts = () => async (dispatch, getState) => {
 
 // ADD POST
 // prettier-ignore
-export const addPost = (formData, history) => async (dispatch, getState) => {
+export const addPost = (image, history) => async (dispatch, getState) => {
     try {
-      const body = JSON.stringify(formData);
       const {
         userLogin: { userInfo },
       } = getState();
 
       const config = {
         headers: {
-          Accept: "application/json",
           "Content-Type": "application/json",
-
+          Accept: "application/json",
           "Access-Control-Allow-Origin": "https://developer.mozilla.org",
           Vary: "Origin",
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
 
-      const res = await axios.post(`${URL}/api/posts`, body, config);
+      const res = await axios.post(`${URL}/api/posts`, {image}, config);
 
       dispatch({
         type: ADD_POST,
@@ -118,7 +116,7 @@ export const addPost = (formData, history) => async (dispatch, getState) => {
       dispatch({
         type: POST_ERROR,
         payload: {
-          message: error.response.statusText,
+          message: error.message,
           status: error.response.status,
         },
       });
@@ -193,7 +191,7 @@ export const getComment = (id) => async (dispatch, getState) => {
 };
 
 // ADD COMMENT
-export const addComment = (formData) => async (dispatch, getState) => {
+export const addComment = (postId, formData) => async (dispatch, getState) => {
   try {
     const body = JSON.stringify(formData);
     const {
@@ -210,7 +208,7 @@ export const addComment = (formData) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const res = await axios.post(`${URL}/api/comments`, body, config);
+    const res = await axios.post(`${URL}/api/comments/${postId}`, body, config);
 
     dispatch({
       type: ADD_COMMENT,

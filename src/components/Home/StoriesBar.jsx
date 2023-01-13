@@ -1,5 +1,6 @@
-import { Avatar } from "@mui/material";
+import { Avatar, Image } from "antd";
 import React from "react";
+import "../../Styles/ComponentsStyle/StoriesBar.scss";
 
 const StoriesBar = () => {
   // Dummy data
@@ -23,13 +24,22 @@ const StoriesBar = () => {
 
   return (
     <>
-      <div className="stories-container row">
+      <div className="stories-container col-8 mb-3">
         <div className="d-flex">
-          <ul className="row">
+          <ul className="row m-3 p-0">
             {stories.map((story) => (
               <li key={story.id} className="col">
-                <Avatar alt="Remy Sharp" src={story.image} />
-                <p>{story.name}</p>
+                <Avatar
+                  src={
+                    <Image
+                      src={story.image}
+                      style={{
+                        width: 32,
+                      }}
+                    />
+                  }
+                />
+                <p className="m-0">{story.name}</p>
               </li>
             ))}
           </ul>

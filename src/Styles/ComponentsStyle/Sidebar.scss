@@ -1,4 +1,10 @@
 .sidebar {
+  border: 1px solid rgb(219, 219, 219);
   position: fixed;
-  box-sizing: border-box;
+  //margin-right: 300px;
+
+  a,
+  button {
+    color: black;
+  }
 }

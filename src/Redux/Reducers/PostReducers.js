@@ -16,7 +16,13 @@ export const PostReducer = (state = { posts: [], post: null }, action) => {
     case GET_POSTS:
       return { ...state, posts: action.payload };
     case GET_POST:
-      return { ...state, post: { ...state.post, ...action.payload } };
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          ...action.payload,
+        },
+      };
     case DELETE_POST:
       return {
         ...state,

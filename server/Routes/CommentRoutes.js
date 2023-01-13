@@ -20,18 +20,17 @@ commentRouter.post(
 
     try {
       const { text } = req.body;
+      const userId = await User.findById(req.user.id);
+      const user = userId.userName;
 
       // Create and save comment
-      const newComment = new Comment({ text });
+      const newComment = new Comment({ text, user });
       const comment = await newComment.save();
 
       // Assign comment to post
       const post = await Post.findById(req.params.postId);
       post.comments.push(comment.id);
       await post.save();
-
-      const user = await User.findById(req.user.id);
-      await user.save();
 
       res.json(comment);
     } catch (err) {

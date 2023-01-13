@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import PersonIcon from "@mui/icons-material/Person";
-import { Container } from "@mui/system";
-import { Avatar, CssBaseline, Grid, Typography } from "@mui/material";
 import { register } from "../Redux/Actions/UserAction";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  Input,
+  Button,
+  Typography,
+  Col,
+  Row,
+  Divider,
+  Avatar,
+  Image,
+} from "antd";
+
+const { Text } = Typography;
 
 const Register = () => {
   window.scrollTo(0, 0);
@@ -38,37 +45,28 @@ const Register = () => {
     return <Navigate to="/home" />;
   }
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    p: 4,
-    form: {
-      width: "100%", // Fix IE 11 issue.
-      marginTop: "10px",
-    },
-    submit: {
-      margin: "10px",
-    },
-  };
-
   return (
     <>
-      <Container component="main" maxWidth="xs" sx={style}>
-        <CssBaseline />
+      <Col span={12} offset={6}>
+        <Divider orientation="left" />
         <div className="d-flex flex-column justify-content-center align-items-center">
-          <Avatar></Avatar>
-          <Typography component="h1" variant="h5">
+          <Avatar
+            src={
+              <Image
+                src="../public/instagram"
+                style={{
+                  width: 32,
+                }}
+              />
+            }
+          />
+          <Text component="h1" variant="h5">
             Sign up
-          </Typography>
+          </Text>
           <form onSubmit={submitHandler}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
+            <Col>
+              <Row span={24}>
+                <Input
                   autoComplete="fname"
                   name="firstName"
                   variant="outlined"
@@ -82,9 +80,9 @@ const Register = () => {
                     setFirstName(e.target.value);
                   }}
                 />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
+              </Row>
+              <Row span={24}>
+                <Input
                   variant="outlined"
                   required
                   fullWidth
@@ -97,9 +95,9 @@ const Register = () => {
                     setLastName(e.target.value);
                   }}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
+              </Row>
+              <Row span={24}>
+                <Input
                   variant="outlined"
                   required
                   fullWidth
@@ -112,9 +110,9 @@ const Register = () => {
                     setUserName(e.target.value);
                   }}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
+              </Row>
+              <Row span={24}>
+                <Input
                   variant="outlined"
                   required
                   fullWidth
@@ -127,9 +125,9 @@ const Register = () => {
                     setEmail(e.target.value);
                   }}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
+              </Row>
+              <Row span={24}>
+                <Input
                   variant="outlined"
                   required
                   fullWidth
@@ -143,8 +141,8 @@ const Register = () => {
                     setPassword(e.target.value);
                   }}
                 />
-              </Grid>
-            </Grid>
+              </Row>
+            </Col>
             <div className="mt-4">
               <Button
                 type="submit"
@@ -155,16 +153,16 @@ const Register = () => {
                 Sign Up
               </Button>
             </div>
-            <Grid container justify="flex-end">
-              <Grid item>
+            <Col>
+              <Row>
                 <Link to={"/"} variant="body2">
                   Already have an account? Sign in
                 </Link>
-              </Grid>
-            </Grid>
+              </Row>
+            </Col>
           </form>
         </div>
-      </Container>
+      </Col>
     </>
   );
 };
